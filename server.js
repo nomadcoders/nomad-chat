@@ -6,6 +6,7 @@ const Router = require("koa-router");
 const serve = require("koa-static");
 const path = require("path");
 const fs = require("fs");
+const Message = require("./models");
 
 const db = require("./db");
 const app = new Koa();
@@ -45,6 +46,11 @@ io.on("connection", socket => {
     console.log("somebody left!");
     const online = getConnected();
     io.emit("online change", { online });
+  });
+
+  socket.on("new message", msg => {
+    // Create a new Message on the database
+    console.log(msg);
   });
 });
 
