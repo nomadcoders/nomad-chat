@@ -1,0 +1,10 @@
+{
+  "name": "nomadchat",
+  "version": "1.0.0",
+  "description": "Realtime Chat built with NodeJS + KoaJS + SocketIO and React",
+  "main": "server.js",
+  "repository": "https://github.com/nomadcoders/nomad-chat",
+  "author": "Nicolás Serrano Arévalo <itnico.las.me@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
