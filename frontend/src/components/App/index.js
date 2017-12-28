@@ -12,12 +12,19 @@ class App extends Component {
       return <span>Hello you</span>;
     } else {
       return (
-        <div>
-          <Input placeholder="What is your nickname?" submitText={"👍🏻"} />
+        <div className="loggedOut">
+          <Input
+            placeholder="What is your nickname?"
+            submitText={"👍🏻"}
+            onSubmit={this._handleNicknameSubmit}
+          />
         </div>
       );
     }
   }
+  _handleNicknameSubmit = event => {
+    event.preventDefault();
+  };
 }
 
 export default App;

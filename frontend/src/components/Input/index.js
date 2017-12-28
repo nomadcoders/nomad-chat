@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./styles.css";
 
-const Input = ({ placeholder, submitText }) => (
-  <form>
-    <input type="text" placeholder={placeholder} />
-    <input type="submit" value={submitText} />
+const Input = ({ placeholder, submitText, onSubmit }) => (
+  <form class="form" onSubmit={onSubmit}>
+    <input type="text" placeholder={placeholder} className="input" />
+    <input type="submit" value={submitText} className="button" />
   </form>
 );
 
