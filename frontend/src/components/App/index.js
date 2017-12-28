@@ -6,10 +6,15 @@ import "./styles.css";
 const client = io("http://localhost:8000");
 
 class App extends Component {
-  state = {
-    isLoggedIn: localStorage.getItem("nickname") ? true : false,
-    nickname: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: localStorage.getItem("nickname") ? true : false,
+      nickname: "",
+      online: []
+    };
+    client.on("somebody joined", msg => this._updateConnectedList(msg.online));
+  }
   componentDidMount() {
     const { isLoggedIn } = this.state;
     if (isLoggedIn) {
@@ -17,9 +22,17 @@ class App extends Component {
     }
   }
   render() {
-    const { isLoggedIn, nickname } = this.state;
+    const { isLoggedIn, nickname, online } = this.state;
     if (isLoggedIn) {
-      return <span>Hello you</span>;
+      return (
+        <div className="loggedIn">
+          <div>
+            <ul>
+              {online.map(socket => <li key={socket.id}>{socket.nickname}</li>)}
+            </ul>
+          </div>
+        </div>
+      );
     } else {
       return (
         <div className="loggedOut">
@@ -52,6 +65,11 @@ class App extends Component {
       nickname
     });
     client.emit("login", { nickname, loggedIn: true });
+  };
+  _updateConnectedList = list => {
+    this.setState({
+      online: list
+    });
   };
 }
 
