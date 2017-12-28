@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Input from "components/Input";
+import io from "socket.io-client";
 import "./styles.css";
+
+const client = io("http://localhost:8000");
 
 class App extends Component {
   state = {
@@ -44,6 +47,7 @@ class App extends Component {
     });
   };
   _logIn = nickname => {
+    client.emit("fuck");
     this.setState({
       isLoggedIn: true,
       nickname
