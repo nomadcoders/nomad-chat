@@ -6,3 +6,41 @@
   width: 30%;
   margin: 0 auto;
 }
+
+.loggedIn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 80%;
+  margin: 80px auto;
+}
+
+.online {
+  flex-shrink: 0;
+  background-color: white;
+  width: 20%;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(100, 100, 100, 0.3),
+    0 15px 12px rgba(100, 100, 100, 0.1);
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.online ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.online ul li {
+  margin-bottom: 10px;
+}
+
+.online ul li:last-child {
+  margin-bottom: 0;
+}
+
+.online h3 {
+  font-size: 18px;
+  font-weight: 600;
+}

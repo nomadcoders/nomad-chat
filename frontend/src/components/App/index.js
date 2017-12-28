@@ -13,7 +13,7 @@ class App extends Component {
       nickname: "",
       online: []
     };
-    client.on("somebody joined", msg => this._updateConnectedList(msg.online));
+    client.on("online change", msg => this._updateConnectedList(msg.online));
   }
   componentDidMount() {
     const { isLoggedIn } = this.state;
@@ -26,7 +26,8 @@ class App extends Component {
     if (isLoggedIn) {
       return (
         <div className="loggedIn">
-          <div>
+          <div className="online">
+            <h3>Online Users</h3>
             <ul>
               {online.map(socket => <li key={socket.id}>{socket.nickname}</li>)}
             </ul>

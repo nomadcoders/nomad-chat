@@ -11,6 +11,7 @@ const db = require("./db");
 const app = new Koa();
 const router = new Router();
 const server = require("http").createServer(app.callback());
+const io = require("socket.io")(server);
 
 app.use(logger());
 
@@ -27,3 +28,33 @@ router.get("/", async (ctx, next) => {
 
 server.listen(8000);
 console.log("Server running on the port 8000 ✅");
+
+// Socket IO Stuff
+
+io.on("connection", socket => {
+  console.log("somebody connected!!");
+  socket.on("login", msg => {
+    socket.loggedIn = msg.loggedIn;
+    socket.nickname = msg.nickname;
+    console.log(socket.nickname, "just joined nomadchat!");
+    const online = getConnected();
+    io.emit("online change", { online });
+  });
+
+  socket.on("disconnect", socket => {
+    console.log("somebody left!");
+    const online = getConnected();
+    io.emit("online change", { online });
+  });
+});
+
+const getConnected = () => {
+  const sockets = io.sockets.connected;
+  const online = [];
+  for (let socketID in sockets) {
+    let socket = io.sockets.connected[socketID];
+    if (socket.loggedIn)
+      online.push({ nickname: socket.nickname, id: socketID });
+  }
+  return online;
+};
