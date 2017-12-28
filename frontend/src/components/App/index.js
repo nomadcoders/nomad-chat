@@ -4,10 +4,17 @@ import "./styles.css";
 
 class App extends Component {
   state = {
-    isLoggedIn: localStorage.getItem("nickname") ? true : false
+    isLoggedIn: localStorage.getItem("nickname") ? true : false,
+    nickname: ""
   };
-  render() {
+  componentDidMount() {
     const { isLoggedIn } = this.state;
+    if (isLoggedIn) {
+      this._logIn(localStorage.getItem("nickname"));
+    }
+  }
+  render() {
+    const { isLoggedIn, nickname } = this.state;
     if (isLoggedIn) {
       return <span>Hello you</span>;
     } else {
@@ -17,13 +24,30 @@ class App extends Component {
             placeholder="What is your nickname?"
             submitText={"👍🏻"}
             onSubmit={this._handleNicknameSubmit}
+            value={nickname}
+            onChange={this._onNicknameChange}
           />
         </div>
       );
     }
   }
   _handleNicknameSubmit = event => {
+    const { nickname } = this.state;
     event.preventDefault();
+    this._logIn(nickname);
+    localStorage.setItem("nickname", nickname);
+  };
+  _onNicknameChange = event => {
+    const { target: { value } } = event;
+    this.setState({
+      nickname: value
+    });
+  };
+  _logIn = nickname => {
+    this.setState({
+      isLoggedIn: true,
+      nickname
+    });
   };
 }
 
