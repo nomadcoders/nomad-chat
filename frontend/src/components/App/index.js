@@ -47,11 +47,11 @@ class App extends Component {
     });
   };
   _logIn = nickname => {
-    client.emit("fuck");
     this.setState({
       isLoggedIn: true,
       nickname
     });
+    client.emit("login", { nickname, loggedIn: true });
   };
 }
 
